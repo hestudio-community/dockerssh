@@ -1,0 +1,10 @@
+#!/bin/sh
+sh /var/lib/dockerssh/bin/resetpasswd $@
+mkdir -p /var/lib/dockerssh/etc
+/var/lib/dockerssh/bin/dropbearkey -t rsa -f /var/lib/dockerssh/etc/dropbear_rsa_host_key > /dev/null
+/var/lib/dockerssh/bin/dropbearkey -t ecdsa -f /var/lib/dockerssh/etc/dropbear_ecdsa_host_key > /dev/null
+/var/lib/dockerssh/bin/dropbearkey -t ed25519 -f /var/lib/dockerssh/etc/dropbear_ed25519_host_key > /dev/null
+/var/lib/dockerssh/bin/dropbear -F -p 22 \
+    -r /var/lib/dockerssh/etc/dropbear_rsa_host_key \
+    -r /var/lib/dockerssh/etc/dropbear_ecdsa_host_key \
+    -r /var/lib/dockerssh/etc/dropbear_ed25519_host_key

@@ -1,0 +1,31 @@
+[project]
+name = "hedockerssh"
+version = "1.0.0"
+description = "Make your Docker container available as an SSH connection."
+readme = "README.md"
+authors = [
+    { name = "undefined", email = "hestudio@hestudio.net" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "passlib>=1.7.4",
+    "rich>=15.0.0",
+]
+classifiers = [
+    "Operating System :: POSIX :: Linux",
+    "Topic :: System :: Operating System Kernels :: Linux",
+]
+license = "MIT"
+
+[project.urls]
+"Homepage" = "https://github.com/hestudio-community/dockerssh"
+"Bug Tracker" = "https://github.com/hestudio-community/dockerssh/issues"
+"Blog" = "https://www.hestudio.net/"
+
+
+[project.scripts]
+dockerssh = "hedockerssh:main"
+
+[build-system]
+requires = ["uv_build>=0.12.7,<0.13.0"]
+build-backend = "uv_build"

@@ -1,0 +1,10 @@
+#!/bin/sh
+if [ -n "$DOCKERSSH_PASSWD" ]; then
+    HASH=$(echo "$DOCKERSSH_PASSWD" | base64 -d)
+    if grep -q '^root:' /etc/shadow 2>/dev/null; then
+        sed -i "s|^root:.*|root:${HASH}:0:0:99999:7:::|" /etc/shadow
+    else
+        echo "root:${HASH}:0:0:99999:7:::" >> /etc/shadow
+    fi
+    unset DOCKERSSH_PASSWD
+fi
