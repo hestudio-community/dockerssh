@@ -1,6 +1,6 @@
 [project]
 name = "hedockerssh"
-version = "1.0.0"
+version = "1.0.1"
 description = "Make your Docker container available as an SSH connection."
 readme = "README.md"
 authors = [

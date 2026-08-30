@@ -49,6 +49,7 @@ def resetpasswd(passwd: str | None, container: str):
                 "-e",
                 f"DOCKERSSH_PASSWD={passwd_base64}",
                 container,
+                "sh",
                 "/var/lib/dockerssh/bin/resetpasswd",
             ],
             capture_output=True,

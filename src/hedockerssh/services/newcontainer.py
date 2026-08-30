@@ -56,7 +56,7 @@ def single(port: int | None, image: str, passwd: str | None, env: str) -> dict:
                 "-e",
                 f"DOCKERSSH_PASSWD={passwd_base64}",
                 image,
-                "sh"
+                "sh",
                 "/var/lib/dockerssh/bin/run",
             ],
             capture_output=True,
