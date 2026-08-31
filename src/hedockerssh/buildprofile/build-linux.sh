@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export BASEPATH="/var/lib/dockerssh/server"
+export BASEPATH="/var/lib/dockerssh/resources"
 export SCRIPTPATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export PLATFORM=$1
 
