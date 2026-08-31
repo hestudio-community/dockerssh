@@ -1,25 +1,13 @@
-from rich.table import Table
-from rich.console import Console
-
 from hedockerssh.services import envmanager
 
 
 def listinstalledenv():
-    envlist = envmanager.listinstalledenv()
-    table = Table()
-    table.add_column("PLATFORM")
-    table.add_column("LIBC")
-
+    envlist = envmanager.listinstalledplatform()
     for i in envlist:
-        base, libc = i.rsplit("/", 1)
-        table.add_row(base, libc)
+        print(i)
 
-    console = Console()
-    console.print(table)
+def installplatform(platform: str):
+    envmanager.installplatform(platform)
 
-
-def installenv(platform: str, libc: str):
-    envmanager.installenv(platform, libc)
-
-def removeinstalledenv(env: str):
-    envmanager.removeinstalledenv(env)
+def removeinstalledplatform(platform: str):
+    envmanager.removeinstalledplatform(platform)

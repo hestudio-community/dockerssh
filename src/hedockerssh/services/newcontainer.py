@@ -5,15 +5,25 @@ import subprocess
 from hedockerssh.services.core.env import DATAPATH
 from hedockerssh.services.core.tools import port_services
 from hedockerssh.services.core.tools import generatepasswd
-from hedockerssh.services.envmanager import checkinstalledenv
+from hedockerssh.services.envmanager import checkinstalledplatform
 
 
-def single(port: int | None, image: str, passwd: str | None, env: str) -> dict:
-    if not checkinstalledenv(env):
-        print("The platform is not installed.")
+def single(port: int | None, image: str, passwd: str | None, platform: str | None) -> dict:
+    if platform == None:
+        try:
+            platformdefault = subprocess.run(
+                ["docker", "image", "inspect", "--format", '{{.Os}}/{{.Architecture}}', image],
+                capture_output=True,
+                check=True,
+            )
+        except subprocess.CalledProcessError as e:
+            print(e.stderr.decode())
+            return {"code": "ERROR_PROCESS_ERROR"}
+        platform = platformdefault.stdout.decode("utf-8").splitlines()[0]
+
+    if not checkinstalledplatform(platform):
+        print(f"{platform} is not installed.")
         return {"code": "ERROR_NOT_INSTALLED"}
-
-    base, libc = env.rsplit("/", 1)
 
     if port == None:
         port = port_services.generate_port()
@@ -40,17 +50,15 @@ def single(port: int | None, image: str, passwd: str | None, env: str) -> dict:
                 "--name",
                 f"dockerssh-{secrets.token_hex(4)}",
                 "--platform",
-                base,
+                platform,
                 "-d",
                 "-it",
                 "-l",
                 f"dockerssh={port}",
                 "-l",
-                f"dockerssh-libc={libc}",
-                "-l",
-                f"dockerssh-platform={base}",
+                f"dockerssh-platform={platform}",
                 "-v",
-                f"{DATAPATH}/server/{env}/out:/var/lib/dockerssh/bin:ro",
+                f"{DATAPATH}/resources/{platform}/out:/var/lib/dockerssh/bin:ro",
                 "-p",
                 f"{str(port)}:22",
                 "-e",

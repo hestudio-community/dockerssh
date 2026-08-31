@@ -4,11 +4,11 @@ Make your Docker container available as an SSH connection.
 
 ## Require
 
-1. Linux Only.
+1. Linux or macOS.
 2. bash.
 3. git.
 4. Latest docker.
-5. Root Permission.
+5. (For Linux user)Root Permission.
 6. Latest Python LTS.
 7. uv
 

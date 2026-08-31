@@ -4,21 +4,21 @@ from rich.table import Table
 from rich.console import Console
 
 
-def new_container(port: int | None, image: str, passwd: str | None, env: str):
-    newcontainer.single(port, image, passwd, env)
+def new_container(port: int | None, image: str, passwd: str | None, platform: str| None):
+    newcontainer.single(port, image, passwd, platform)
 
 
 def list_container():
     containerlist = containermanager.list_container()["containerlist"]
-    table = Table()
+    table = Table(box=None)
     table.add_column("NAME")
     table.add_column("PORT")
     table.add_column("IMAGE")
-    table.add_column("LIBC")
     table.add_column("PLATFORM")
+    table.add_column("STATUS")
 
     for i in containerlist:
-        table.add_row(i["name"], str(i["port"]), i["image"], i["libc"], i["platform"])
+        table.add_row(i["name"], str(i["port"]), i["image"], i["platform"], i["status"])
 
     console = Console()
     console.print(table)

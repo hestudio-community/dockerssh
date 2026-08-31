@@ -1,6 +1,0 @@
-FROM ubuntu:latest
-
-WORKDIR /build
-RUN apt update -y
-RUN apt install bash -y
-RUN apt install build-essential -y

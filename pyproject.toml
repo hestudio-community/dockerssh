@@ -1,6 +1,6 @@
 [project]
 name = "hedockerssh"
-version = "1.0.1"
+version = "1.1.0"
 description = "Make your Docker container available as an SSH connection."
 readme = "README.md"
 authors = [
@@ -13,6 +13,7 @@ dependencies = [
 ]
 classifiers = [
     "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
     "Topic :: System :: Operating System Kernels :: Linux",
 ]
 license = "MIT"

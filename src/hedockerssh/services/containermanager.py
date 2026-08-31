@@ -14,7 +14,7 @@ def list_container():
                 "--filter",
                 "label=dockerssh",
                 "--format",
-                '{"name":"{{.Names}}", "port":{{.Label "dockerssh"}}, "image":"{{.Image}}","libc":"{{.Label "dockerssh-libc"}}", "platform":"{{.Label "dockerssh-platform"}}"}',
+                '{"name":"{{.Names}}", "port":{{.Label "dockerssh"}}, "image":"{{.Image}}","platform":"{{.Label "dockerssh-platform"}}","status":"{{.Status}}"}',
             ],
             capture_output=True,
             check=True,
@@ -23,7 +23,7 @@ def list_container():
         print(e.stderr.decode())
         return {"code": "ERROR_PROCESS_ERROR"}
 
-    containerliststr = str(originoutput.stdout.decode("utf-8")).split("\n")[:-1]
+    containerliststr = str(originoutput.stdout.decode("utf-8")).splitlines()
     containerlist = []
     for i in containerliststr:
         containerlist.append(json.loads(i))

@@ -7,7 +7,7 @@ echo "DROPBEAR_BUILDPATH=$DROPBEAR_BUILDPATH"
 
 cd $DROPBEAR_BUILDPATH/dropbear
 ./configure --disable-zlib
-make
+make STATIC=1
 
 cd $DROPBEAR_BUILDPATH
 export DROPBEAR_OUT=$DROPBEAR_BUILDPATH/out

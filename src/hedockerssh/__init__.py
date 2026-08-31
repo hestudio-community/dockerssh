@@ -14,7 +14,7 @@ def dockerchecker() -> bool:
     dockercmd = shutil.which("docker")
     if not dockercmd:
         return False
-
+ 
     r = subprocess.run(
         [dockercmd, "info", "--format", "{{.ServerVersion}}"],
         capture_output=True,
@@ -54,20 +54,12 @@ def main() -> None:
 
     # /env/install
     install_env_parser.add_argument(
-        "-p", "--platform", required=True, type=str, help="e.g. linux/amd64"
-    )
-    install_env_parser.add_argument(
-        "-l", "--libc", required=True, type=str, help="e.g. gnu or musl"
+        "platform", type=str, help="e.g. linux/amd64",metavar="<platform>"
     )
 
     # /env/remove
     remove_env_parser.add_argument(
-        "-e",
-        "-env",
-        "--enviromnemt",
-        required=True,
-        type=str,
-        help="e.g. linux/amd64/gnu",
+        "platform", type=str, help="e.g. linux/amd64",metavar="<platform>"
     )
 
     # /container
@@ -93,17 +85,14 @@ def main() -> None:
     )
 
     # /container/new
-    new_container_parser.add_argument("-i", "--image", type=str, required=True)
     new_container_parser.add_argument(
-        "-e",
-        "-env",
-        "--enviromnemt",
+        "--platform",
         type=str,
-        required=True,
-        help="e.g. linux/amd64/gnu",
+        help="e.g. linux/amd64",
     )
     new_container_parser.add_argument("-p", "--port", type=int)
     new_container_parser.add_argument("--passwd", type=str)
+    new_container_parser.add_argument("image", type=str, metavar="<image>")
 
     # /container/resetpasswd
     resetpasswd_container_parser.add_argument(
@@ -131,7 +120,7 @@ def main() -> None:
                         port=args.port,
                         image=args.image,
                         passwd=args.passwd,
-                        env=args.enviromnemt,
+                        platform=args.platform,
                     )
                 case "list":
                     container_manager.list_container()
@@ -152,9 +141,9 @@ def main() -> None:
                 case "list":
                     env_manager.listinstalledenv()
                 case "install":
-                    env_manager.installenv(platform=args.platform, libc=args.libc)
+                    env_manager.installplatform(platform=args.platform)
                 case "remove":
-                    env_manager.removeinstalledenv(env=args.enviromnemt)
+                    env_manager.removeinstalledplatform(platform=args.platform)
                 case _:
                     parser.print_usage()
         case _:
