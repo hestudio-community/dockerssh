@@ -2,7 +2,7 @@ import secrets
 import subprocess
 
 
-from hedockerssh.services.core.env import BASEPATH
+from hedockerssh.services.core.env import DATAPATH
 from hedockerssh.services.core.tools import port_services
 from hedockerssh.services.core.tools import generatepasswd
 from hedockerssh.services.envmanager import checkinstalledenv
@@ -50,7 +50,7 @@ def single(port: int | None, image: str, passwd: str | None, env: str) -> dict:
                 "-l",
                 f"dockerssh-platform={base}",
                 "-v",
-                f"/var/lib/dockerssh/server/{env}/out:/var/lib/dockerssh/bin:ro",
+                f"{DATAPATH}/server/{env}/out:/var/lib/dockerssh/bin:ro",
                 "-p",
                 f"{str(port)}:22",
                 "-e",

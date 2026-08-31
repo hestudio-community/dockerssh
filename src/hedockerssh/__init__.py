@@ -25,7 +25,7 @@ def dockerchecker() -> bool:
 
 
 def main() -> None:
-    if not platform.system() == "Linux":
+    if not platform.system() in ["Linux", "Darwin"]:
         print("This program runs exclusively on Linux systems.")
         sys.exit(1)
     if not dockerchecker():
