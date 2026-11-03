@@ -12,6 +12,7 @@ dependencies = [
     "rich>=15.0.0",
 ]
 classifiers = [
+    "Programming Language :: Python :: 3.13",
     "Operating System :: POSIX :: Linux",
     "Operating System :: MacOS",
     "Topic :: System :: Operating System Kernels :: Linux",
